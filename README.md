@@ -122,6 +122,8 @@ Project-level analysis of:
 
 ## Author
 
-**Abdalla Mohamud**
+Built by **Abdalla Mohamud**
 
-Data Analytics | Business Intelligence | Data Engineering
+**Portfolio — coming soon** ·[LinkedIn](https://www.linkedin.com/in/abdallamohamud/)
+
+Open to data analyst, BI developer, and analytics engineer roles.
