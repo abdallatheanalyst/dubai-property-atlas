@@ -10,15 +10,15 @@ The project explores how Dubai's real estate market has evolved over time by ana
 
 ### Market Overview
 
-![Market Overview](screenshots/overview.png)
+![Market Overview](overview.png)
 
 ### Neighborhood Intelligence
 
-![Neighborhood Intelligence](screenshots/neighborhood_intelligence.png)
+![Neighborhood Intelligence](neighborhood_intelligence.png)
 
 ### Project Activity
 
-![Project Activity](screenshots/project_activity.png)
+![Project Activity](project_activity.png)
 
 ---
 
