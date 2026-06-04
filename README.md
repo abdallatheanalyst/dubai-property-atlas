@@ -1,10 +1,6 @@
 # Dubai Property Atlas: 20 Years of Neighborhood Evolution
 
-An end-to-end real estate analytics project built using over **1.7 million Dubai property transactions** from the **Dubai Land Department (DLD) Open Data Portal**.
-
-The project explores how Dubai's real estate market has evolved over time by analyzing transaction activity, neighborhood performance, project-level trends, and pricing dynamics across the city.
-
----
+End-to-end real estate analytics project on **1,708,561 Dubai property transactions**, from raw Dubai Land Department open data through SQL Server ETL, dimensional modeling, and an interactive Power BI dashboard.
 
 ## Dashboard
 
@@ -22,11 +18,22 @@ The project explores how Dubai's real estate market has evolved over time by ana
 
 ---
 
-## Data Source
+## Tech Stack
 
-**Dubai Land Department (DLD) Open Data Portal**
+`SQL Server` · `Power BI Desktop` · `DAX` · `Power Query` · `Star Schema Modeling` · `Figma`
 
-The dataset contains over 1.7 million real property transactions spanning approximately two decades of Dubai's real estate market.
+---
+
+## Headline Numbers
+
+| Metric | Value |
+|----------|----------|
+| Total Transactions | **1,708,561** |
+| Total Sales Value | **AED 6.53 Trillion** |
+| Average Transaction Value | **AED 3.83 Million** |
+| Average Price per SQM | **AED 67.14K** |
+| Time Span | **2004 → 2025** |
+| Dashboard Pages | **3** |
 
 ---
 
@@ -36,25 +43,85 @@ The dataset contains over 1.7 million real property transactions spanning approx
 Dubai Land Department Open Data
                 │
                 ▼
-      Raw Transaction Data
+      Raw_Transactions_Stage
                 │
                 ▼
-        Data Cleaning
+      Raw_Transactions_Typed
                 │
                 ▼
-       Dimensional Modeling
-          (Star Schema)
-                │
-                ▼
-            Power BI
-                │
-                ▼
-     Interactive Analytics Dashboard
+         Star Schema
+ ┌──────────┬──────────┬─────────────┬──────────────────┐
+ │ Dim_Date │ Dim_Area │ Dim_Project │ Dim_Property_Type│
+ └────┬─────┴────┬─────┴──────┬──────┴─────────┬────────┘
+      │          │            │                │
+      └──────────┴────────────┴────────────────┘
+                          ▼
+                    Fact_Sales
+                 (1.7M+ Records)
+                          │
+                          ▼
+                       Power BI
 ```
 
 ---
 
-## Key Findings
+## Why Each Decision Was Made
+
+### 1. Staging before typing
+
+The source dataset contains mixed formats, missing values, and inconsistent field types. Loading everything into a staging table first prevents data loss and allows validation before analytical modeling.
+
+### 2. TRY_CONVERT instead of direct casting
+
+Rather than failing an entire load because of a few malformed records, TRY_CONVERT allows problematic rows to be identified while preserving the rest of the dataset.
+
+### 3. Star schema instead of a flat model
+
+The business questions revolve around time, neighborhoods, projects, and property types. Separating these into dimensions improves Power BI performance, simplifies DAX calculations, and creates a scalable analytical model.
+
+### 4. Import mode instead of DirectQuery
+
+With over 1.7 million transactions, Import mode delivered significantly faster report interaction and filtering while maintaining manageable refresh times.
+
+### 5. Neighborhood and project intelligence
+
+The model was designed not only to report transactions, but to identify where activity, pricing, and market growth are concentrated across Dubai's real estate market.
+
+---
+
+## Key DAX Measures
+
+### Total Sales
+
+```DAX
+Total Sales =
+SUM(Fact_Sales[actual_worth])
+```
+
+### Total Transactions
+
+```DAX
+Total Transactions =
+COUNT(Fact_Sales[transaction_id])
+```
+
+### Average Transaction Value
+
+```DAX
+Avg Transaction Value =
+DIVIDE([Total Sales],[Total Transactions])
+```
+
+### Average Price per SQM
+
+```DAX
+Avg Price Per SQM =
+AVERAGE(Fact_Sales[meter_sale_price])
+```
+
+---
+
+## Findings
 
 ### Market Growth
 
@@ -62,9 +129,9 @@ Dubai's real estate market has experienced significant long-term growth, with tr
 
 ### Neighborhood Leaders
 
-Communities such as Marsa Dubai, Palm Jumeirah, Burj Khalifa, and Business Bay consistently rank among the strongest-performing areas by transaction value.
+Communities such as **Marsa Dubai, Palm Jumeirah, Burj Khalifa, and Business Bay** consistently ranked among the strongest-performing areas by transaction value.
 
-### Pricing Differences
+### Premium Communities
 
 Price per square meter varies significantly across neighborhoods, highlighting distinct luxury, premium, and emerging market segments.
 
@@ -78,7 +145,7 @@ Project-level analysis revealed where transaction activity, sales value, and pre
 
 ### Market Overview
 
-Executive-level view of:
+Executive view of:
 
 - Total Sales
 - Total Transactions
@@ -88,16 +155,16 @@ Executive-level view of:
 
 ### Neighborhood Intelligence
 
-Neighborhood-level analysis of:
+Analysis of:
 
-- Top Performing Communities
-- Average Price per SQM
+- Top Performing Neighborhoods
+- Price per SQM Comparison
 - Growth Trends
-- Comparative Market Performance
+- Neighborhood Performance Metrics
 
 ### Project Activity
 
-Project-level analysis of:
+Analysis of:
 
 - Most Active Projects
 - Top Projects by Sales Value
@@ -112,11 +179,17 @@ Project-level analysis of:
 - SQL Analytics
 - Data Modeling
 - Star Schema Design
-- DAX Measures
+- DAX Development
 - Business Intelligence
 - Dashboard Development
 - Data Storytelling
 - Data Visualization
+
+---
+
+## Data Source
+
+Dubai Land Department (DLD) Open Data Portal
 
 ---
 
