@@ -197,6 +197,6 @@ Dubai Land Department (DLD) Open Data Portal
 
 Built by **Abdalla Mohamud**
 
-**Portfolio — coming soon** ·[LinkedIn](https://www.linkedin.com/in/abdallamohamud/)
+[Portfolio](https://abdalladata.carrd.co/) ·[LinkedIn](https://www.linkedin.com/in/abdallamohamud/)
 
 Open to data analyst, BI developer, and analytics engineer roles.
